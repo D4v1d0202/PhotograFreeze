@@ -30,7 +30,7 @@ float yRotation;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         //rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        transform.rotation = Quaternion.Euler(xRotation < 60f ? xRotation : 60f, yRotation, 0); //darf nicht weiter runterschauen als 60 Grad
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }

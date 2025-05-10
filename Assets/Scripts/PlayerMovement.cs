@@ -46,8 +46,9 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
 
         //handle drag
-        if (grounded)
+        if (grounded){
             rb.drag = groundDrag;
+        }
         else
             rb.drag = 0;
     }
