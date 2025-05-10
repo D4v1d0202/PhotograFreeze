@@ -56,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/PlayerCam.cs" />
+    <Compile Include="Assets/Scripts/WaypointFollower.cs" />
+    <Compile Include="Assets/Scripts/StickyPlatformTracker.cs" />
+    <Compile Include="Assets/Scripts/MovingPlatform.cs" />
     <Compile Include="Assets/Scripts/MoveCamera.cs" />
     <Compile Include="Assets/Scripts/CameraController.cs" />
     <Compile Include="Assets/Scripts/PlayerMovement.cs" />
