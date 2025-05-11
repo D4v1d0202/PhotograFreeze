@@ -41,7 +41,7 @@ public class WaypointFollower : MonoBehaviour
         speed = speed + increase;
     }
 
-    public void freeze(){
+    public void Freeze(){
         speed = 0;
     }
 }

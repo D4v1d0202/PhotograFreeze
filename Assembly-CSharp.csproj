@@ -61,6 +61,7 @@
     <Compile Include="Assets/Scripts/MovingPlatform.cs" />
     <Compile Include="Assets/Scripts/MoveCamera.cs" />
     <Compile Include="Assets/Scripts/CameraController.cs" />
+    <Compile Include="Assets/Scripts/PhotoRaycaster.cs" />
     <Compile Include="Assets/Scripts/PlayerMovement.cs" />
     <Compile Include="Assets/Scripts/ArmPivot.cs" />
   </ItemGroup>
