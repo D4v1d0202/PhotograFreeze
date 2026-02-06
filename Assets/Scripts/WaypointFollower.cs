@@ -9,7 +9,8 @@ public class WaypointFollower : MonoBehaviour
 
     [SerializeField] private float speed = 2f;
     private float preFreezeChangeSpeed = 0f;
-    private bool isFrozen = false;
+    private int freezeCount = 0; // how many photos are keeping this frozen
+
 
 
     private void FixedUpdate()
@@ -49,17 +50,19 @@ public class WaypointFollower : MonoBehaviour
         speed = speed + increase;
     }
 
-    public void FreezeChange()
+    public void Freeze()
+{
+    freezeCount++;
+    speed = 0f;
+}
+
+public void Unfreeze()
+{
+    freezeCount = Mathf.Max(0, freezeCount - 1);
+    if (freezeCount == 0)
     {
-        if (isFrozen)
-        { //because of float
-            speed = preFreezeChangeSpeed;
-        }
-        else
-        {
-            preFreezeChangeSpeed = speed;
-            speed = 0f;
-        }
-        isFrozen = !isFrozen; // freeze cooldown
+        speed = preFreezeChangeSpeed > 0f ? preFreezeChangeSpeed : 2f;
     }
+}
+
 }
