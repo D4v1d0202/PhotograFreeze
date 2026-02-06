@@ -13,7 +13,7 @@ public class PhotoRaycaster : MonoBehaviour
 {
     public Camera photoCam;
     public int raysPerAxis = 10;
-    public float rayDistance = 100f;
+    public float rayDistance = 200f;
     public float photoCooldown = 1f;
 
     private float lastPhotoTime = -Mathf.Infinity; // Spieler kann direkt nach Spawn Foto machen

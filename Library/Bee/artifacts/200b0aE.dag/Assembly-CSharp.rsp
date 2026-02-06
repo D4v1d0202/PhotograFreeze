@@ -359,6 +359,7 @@
 "Assets/Scripts/MovingPlatform.cs"
 "Assets/Scripts/PhotoRaycaster.cs"
 "Assets/Scripts/PlayerCam.cs"
+"Assets/Scripts/PlayerLife.cs"
 "Assets/Scripts/PlayerMovement.cs"
 "Assets/Scripts/StickyPlatformTracker.cs"
 "Assets/Scripts/WaypointFollower.cs"
