@@ -17,6 +17,7 @@ public class PhotoRaycaster : MonoBehaviour
     public float photoCooldown = 1f;
 
     private float lastPhotoTime = -Mathf.Infinity; // Spieler kann direkt nach Spawn Foto machen
+    public Canvas viewfinderCanvas;
 
     // CAMERA ROLL
     public List<PhotoData> cameraRoll = new List<PhotoData>();
@@ -68,7 +69,7 @@ foreach (var follower in targetsToFreeze)
     Debug.Log("Froze: " + follower.name);
 }
 
-        // Capture screenshot AFTER freezing objects
+        // Capture screenshot after freezing objects
         StartCoroutine(CaptureScreenshot((Texture2D tex) =>
         {
             PhotoData newPhoto = new PhotoData();
@@ -83,6 +84,8 @@ foreach (var follower in targetsToFreeze)
 
     IEnumerator CaptureScreenshot(System.Action<Texture2D> onDone)
     {
+        viewfinderCanvas.enabled = false;
+
         yield return new WaitForEndOfFrame();
 
         Texture2D tex = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
@@ -90,6 +93,8 @@ foreach (var follower in targetsToFreeze)
         tex.Apply();
 
         onDone?.Invoke(tex);
+
+        viewfinderCanvas.enabled = true;
     }
 
     // Delete a photo from the camera roll and unfreeze its objects
