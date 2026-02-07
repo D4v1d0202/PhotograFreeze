@@ -53,6 +53,7 @@ public class WaypointFollower : MonoBehaviour
     public void Freeze()
 {
     freezeCount++;
+    preFreezeChangeSpeed = speed;
     speed = 0f;
 }
 
@@ -63,6 +64,10 @@ public void Unfreeze()
     {
         speed = preFreezeChangeSpeed > 0f ? preFreezeChangeSpeed : 2f;
     }
+}
+
+public float GetSpeed(){
+    return speed;
 }
 
 }

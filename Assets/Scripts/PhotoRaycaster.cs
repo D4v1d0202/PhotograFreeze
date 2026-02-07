@@ -12,7 +12,7 @@ public class PhotoData
 public class PhotoRaycaster : MonoBehaviour
 {
     public Camera photoCam;
-    public int raysPerAxis = 250000;
+    public int raysPerAxis = 10;
     public float rayDistance = 200f;
     public float photoCooldown = 1f;
 
