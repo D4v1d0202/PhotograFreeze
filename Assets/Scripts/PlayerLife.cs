@@ -1,17 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerLife : MonoBehaviour
 {
     private Collider playerCollider;
     private Rigidbody rb;
     private PlayerMovement movement;
-    [SerializeField] private MonoBehaviour cameraLook; // drag your camera script here
+    [SerializeField] private MonoBehaviour cameraLook;
 
     [SerializeField] private Canvas deathScreenUI;
     [SerializeField] private Transform respawnPoint;
     private Collider maliciousObject;
 
-    private bool isDying;
+    public bool isDying;
 
     private void Start()
     {
@@ -48,7 +51,6 @@ public class PlayerLife : MonoBehaviour
 
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
-        playerCollider.enabled = false;
 
         deathScreenUI.gameObject.SetActive(true);
 
@@ -57,21 +59,33 @@ public class PlayerLife : MonoBehaviour
     }
 
     public void Respawn()
-    {
-        transform.position = respawnPoint.position;
-        isDying = false;
+{
+    Debug.Log("respawn initiated");
 
-        movement.enabled = true;
-        cameraLook.enabled = true;
+    isDying = false;
 
-        rb.isKinematic = false;
-        playerCollider.enabled = true;
+    // set position
+    rb.isKinematic = true; // temporarily freeze physics to prevent physics interference
+    transform.position = respawnPoint.position;
+    rb.velocity = Vector3.zero; // clear any residual movement
 
-        deathScreenUI.gameObject.SetActive(false);
+    // re-enable everything after a frame
+    StartCoroutine(EnablePlayerNextFrame());
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+    deathScreenUI.gameObject.SetActive(false);
 
-        maliciousObject.enabled = true; 
-    }
+    Cursor.visible = false;
+    Cursor.lockState = CursorLockMode.Locked;
+
+    maliciousObject.enabled = true; 
+}
+
+private IEnumerator EnablePlayerNextFrame()
+{
+    yield return null; // wait one frame
+    movement.enabled = true;
+    cameraLook.enabled = true;
+    rb.isKinematic = false;
+}
+
 }

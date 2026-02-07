@@ -13,6 +13,7 @@ public class CameraRollUI : MonoBehaviour
 
     private bool currentlyEnabled = false;
     private int currentIndex = 0;
+    [SerializeField] private GameObject Player;
 
     void Start()
     {
@@ -22,13 +23,15 @@ public class CameraRollUI : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I))
+        if(Input.GetKeyDown(KeyCode.I) && !Player.GetComponent<PlayerLife>().isDying)
         {
             if(currentlyEnabled)
                 CloseMenu();
             else
                 OpenMenu();
         }
+        else if(Input.GetKeyDown(KeyCode.Escape) && currentlyEnabled)
+            CloseMenu();
     }
 
     void OpenMenu()
