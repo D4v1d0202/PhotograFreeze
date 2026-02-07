@@ -12,7 +12,7 @@ public class PhotoData
 public class PhotoRaycaster : MonoBehaviour
 {
     public Camera photoCam;
-    public int raysPerAxis = 10;
+    public int raysPerAxis = 250000;
     public float rayDistance = 200f;
     public float photoCooldown = 1f;
 
@@ -35,52 +35,55 @@ public class PhotoRaycaster : MonoBehaviour
     }
 
     void ShootPhoto()
+{
+    HashSet<WaypointFollower> targetsToFreeze = new HashSet<WaypointFollower>();
+
+    Plane[] planes = GeometryUtility.CalculateFrustumPlanes(photoCam);
+
+    WaypointFollower[] allFollowers = FindObjectsOfType<WaypointFollower>();
+
+    foreach (var follower in allFollowers)
     {
-        HashSet<WaypointFollower> targetsToFreeze = new HashSet<WaypointFollower>();
+        Renderer rend = follower.GetComponentInChildren<Renderer>();
+        if (rend == null) continue;
 
-        for (int x = 0; x < raysPerAxis; x++)
+        // check if inside camera view
+        if (!GeometryUtility.TestPlanesAABB(planes, rend.bounds))
+            continue;
+
+        // check if visible (not behind wall)
+        Vector3 dir = (rend.bounds.center - photoCam.transform.position).normalized;
+        float dist = Vector3.Distance(photoCam.transform.position, rend.bounds.center);
+
+        if (Physics.Raycast(photoCam.transform.position, dir, out RaycastHit hit, dist))
         {
-            for (int y = 0; y < raysPerAxis; y++)
+            if (hit.collider.GetComponentInParent<WaypointFollower>() == follower)
             {
-                float u = (x + 0.5f) / raysPerAxis;
-                float v = (y + 0.5f) / raysPerAxis;
-
-                Ray ray = photoCam.ViewportPointToRay(new Vector3(u, v, 0));
-
-                if (Physics.Raycast(ray, out RaycastHit hit, rayDistance))
-                {
-                    Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red, 1f);
-
-                    WaypointFollower follower = hit.collider.GetComponentInParent<WaypointFollower>();
-                    if (follower != null)
-                    {
-                        targetsToFreeze.Add(follower);
-                    }
-                }
+                targetsToFreeze.Add(follower);
             }
         }
+    }
 
-        // Freeze all detected objects and store them in a list
-List<WaypointFollower> frozenList = new List<WaypointFollower>();
-foreach (var follower in targetsToFreeze)
-{
-    follower.Freeze();
-    frozenList.Add(follower);
-    Debug.Log("Froze: " + follower.name);
+    // Freeze all detected objects
+    List<WaypointFollower> frozenList = new List<WaypointFollower>();
+    foreach (var follower in targetsToFreeze)
+    {
+        follower.Freeze();
+        frozenList.Add(follower);
+        Debug.Log("Froze: " + follower.name);
+    }
+
+    StartCoroutine(CaptureScreenshot((Texture2D tex) =>
+    {
+        PhotoData newPhoto = new PhotoData();
+        newPhoto.screenshot = tex;
+        newPhoto.frozenTargets = frozenList;
+
+        cameraRoll.Add(newPhoto);
+        Debug.Log("Photo saved. Camera roll size: " + cameraRoll.Count);
+    }));
 }
 
-        // Capture screenshot after freezing objects
-        StartCoroutine(CaptureScreenshot((Texture2D tex) =>
-        {
-            PhotoData newPhoto = new PhotoData();
-            newPhoto.screenshot = tex;
-            newPhoto.frozenTargets = frozenList;
-
-            cameraRoll.Add(newPhoto);
-
-            Debug.Log("Photo saved. Camera roll size: " + cameraRoll.Count);
-        }));
-    }
 
     IEnumerator CaptureScreenshot(System.Action<Texture2D> onDone)
     {
