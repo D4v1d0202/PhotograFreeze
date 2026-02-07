@@ -356,6 +356,7 @@
 "Assets/Scripts/ArmPivot.cs"
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/CameraRollUI.cs"
+"Assets/Scripts/MainMenu.cs"
 "Assets/Scripts/MoveCamera.cs"
 "Assets/Scripts/MovingPlatform.cs"
 "Assets/Scripts/OpenDoorAfterEnemiesDefeated.cs"
