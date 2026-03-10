@@ -64,6 +64,7 @@
     <Compile Include="Assets/Scripts/PlayerLife.cs" />
     <Compile Include="Assets/Scripts/MoveCamera.cs" />
     <Compile Include="Assets/Scripts/CameraRollUI.cs" />
+    <Compile Include="Assets/Scripts/WaypointFollowerReset.cs" />
     <Compile Include="Assets/Scripts/CameraController.cs" />
     <Compile Include="Assets/Scripts/PhotoRaycaster.cs" />
     <Compile Include="Assets/Scripts/PlayerMovement.cs" />
