@@ -67,7 +67,7 @@ public class PlayerLife : MonoBehaviour
     // set position
     rb.isKinematic = true; // temporarily freeze physics to prevent physics interference
     transform.position = respawnPoint.position;
-    rb.velocity = Vector3.zero; // clear any residual movement
+    rb.velocity = Vector3.zero; // stop movement
 
     // re-enable everything after a frame
     StartCoroutine(EnablePlayerNextFrame());

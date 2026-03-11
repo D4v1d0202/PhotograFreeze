@@ -70,7 +70,6 @@ public class PhotoRaycaster : MonoBehaviour
     {
         follower.Freeze();
         frozenList.Add(follower);
-        Debug.Log("Froze: " + follower.name);
     }
 
     StartCoroutine(CaptureScreenshot((Texture2D tex) =>
@@ -80,7 +79,6 @@ public class PhotoRaycaster : MonoBehaviour
         newPhoto.frozenTargets = frozenList;
 
         cameraRoll.Add(newPhoto);
-        Debug.Log("Photo saved. Camera roll size: " + cameraRoll.Count);
     }));
 }
 
@@ -100,7 +98,7 @@ public class PhotoRaycaster : MonoBehaviour
         viewfinderCanvas.enabled = true;
     }
 
-    // Delete a photo from the camera roll and unfreeze its objects
+    // Delete photo and unfreeze objects
     public void DeletePhoto(int index)
     {
         if (index < 0 || index >= cameraRoll.Count) return;
@@ -115,7 +113,5 @@ public class PhotoRaycaster : MonoBehaviour
 
 
         cameraRoll.RemoveAt(index);
-
-        Debug.Log("Photo deleted. Camera roll size: " + cameraRoll.Count);
     }
 }

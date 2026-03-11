@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CameraRollUI : MonoBehaviour
 {
-    public PhotoRaycaster photoRaycaster;  // Drag your PhotoRaycaster here
+    public PhotoRaycaster photoRaycaster; 
     public RawImage photoPreview;
     public Button nextButton;
     public Button prevButton;
@@ -37,11 +37,11 @@ public class CameraRollUI : MonoBehaviour
     void OpenMenu()
 {
     Cursor.visible = true;
-    Cursor.lockState = CursorLockMode.None; // <-- unlock cursor
+    Cursor.lockState = CursorLockMode.None; // unlock cursor
     GetComponent<Canvas>().enabled = true;
     GetComponent<GraphicRaycaster>().enabled = true;
     currentlyEnabled = true;
-    Time.timeScale = 0f; // optional: freeze game while viewing photos
+    Time.timeScale = 0f; // freeze while viewing
 
     UpdatePreview();
 }
@@ -49,7 +49,7 @@ public class CameraRollUI : MonoBehaviour
 void CloseMenu()
 {
     Cursor.visible = false;
-    Cursor.lockState = CursorLockMode.Locked; // <-- lock cursor again
+    Cursor.lockState = CursorLockMode.Locked; // lock cursor again
     GetComponent<Canvas>().enabled = false;
     GetComponent<GraphicRaycaster>().enabled = false;
     currentlyEnabled = false;
@@ -85,7 +85,7 @@ void CloseMenu()
 
         currentIndex++;
         if(currentIndex >= photoRaycaster.cameraRoll.Count)
-            currentIndex = 0; // loop around
+            currentIndex = 0; 
 
         UpdatePreview();
     }
@@ -96,7 +96,7 @@ void CloseMenu()
 
         currentIndex--;
         if(currentIndex < 0)
-            currentIndex = photoRaycaster.cameraRoll.Count - 1; // loop around
+            currentIndex = photoRaycaster.cameraRoll.Count - 1; 
 
         UpdatePreview();
     }
@@ -107,7 +107,6 @@ void CloseMenu()
 
         photoRaycaster.DeletePhoto(currentIndex);
 
-        // adjust index if necessary
         if(currentIndex >= photoRaycaster.cameraRoll.Count)
             currentIndex = photoRaycaster.cameraRoll.Count - 1;
 
